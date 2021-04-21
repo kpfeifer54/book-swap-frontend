@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Form, Button } from 'react-bootstrap';
 import BookAPI from '../api/BookAPI.js';
-import { Redirect } from 'react-router';
+// import { Redirect } from 'react-router';
 
 function AddBookPage(props)  {
 
@@ -13,7 +13,6 @@ function AddBookPage(props)  {
       description: event.target.elements[2].value,
       image: event.target.elements[3].value
     }
-    console.log(bookObject)
       let data = await BookAPI.addBook(bookObject)
       console.log(data)
   }

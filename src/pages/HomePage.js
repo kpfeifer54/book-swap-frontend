@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-// import { fetchArticles, searchArticles } from '../api/ArticlesAPI';
-import Jumbotron from 'react-bootstrap/Jumbotron'
-import Button from 'react-bootstrap/Button'
+import React from 'react';
+import Jumbotron from 'react-bootstrap/Jumbotron';
+import Button from 'react-bootstrap/Button';
+import { Link } from 'react-router-dom';
 
-function HomePage(props) {
+function HomePage({ isLoggedIn, user, handleLogout }) {
   return (
     <div>
       <Jumbotron>
@@ -15,6 +15,29 @@ function HomePage(props) {
           <Button variant="primary">Sign up</Button>
         </p>
       </Jumbotron>
+      <div>
+        Home Page
+        {
+          user &&
+          <div>
+            Hi {user.username}
+          </div>
+        }
+        {
+          !isLoggedIn
+          ?
+          <div>
+            <div>
+              <Link to='/login'>Login</Link>
+            </div>
+            <div>
+              <Link to='/signup'>Signup</Link>
+            </div>
+          </div>
+          :
+          <button onClick={handleLogout}>Logout</button>
+        }
+      </div>
     </div>
   );
 }

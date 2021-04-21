@@ -9,20 +9,21 @@ import BookAPI from '../api/BookAPI';
 import UserContext from '../contexts/UserContext';
 import { Link } from 'react-router-dom';
 
-function MyBooksPage(props) {
+function WishListPage(props) {
 
   const userContext = React.useContext(UserContext);
-  console.log(userContext.user)
+  console.log('user_context: ', userContext.user)
 
   const [Books, setBooks] = useState([])
 
   async function getBooks() {
-    let my_book_list = await BookAPI.fetchBookList()
-    let book_array = await Promise.all(my_book_list[0].books.map(async (book) => {
-      return await getBook(book)
-    }))
-    console.log(book_array)
-    setBooks(book_array)
+    if (userContext.user) {
+      let my_book_list = await BookAPI.fetchWishList(userContext.user.wish_list)
+      let book_array = await Promise.all(my_book_list.books.map(async (book) => {
+        return await getBook(book)
+      }))
+      setBooks(book_array)
+    }
   }
 
   async function getBook(book_id) {
@@ -81,4 +82,4 @@ function MyBooksPage(props) {
   );
 }
 
-export default MyBooksPage;
+export default WishListPage;
