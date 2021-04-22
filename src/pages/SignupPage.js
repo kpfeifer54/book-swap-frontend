@@ -16,7 +16,6 @@ const SignupPage = (props) => {
     } else {
       history.push('/login');
     }
-
   }
 
   return (

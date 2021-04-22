@@ -19,8 +19,9 @@ function BestSellers(props) {
   return (
     <div>
       <DropdownButton id="dropdown-item-button" title="Select List" onSelect={props.handleSelect}>
+        <Dropdown.Item eventKey="all-books">User Books</Dropdown.Item>
         {Lists.map((item) => (
-          <Dropdown.Item eventKey={item.list_name_encoded}>{item.display_name}</Dropdown.Item>
+        <Dropdown.Item eventKey={item.list_name_encoded}>{item.display_name}</Dropdown.Item>
         ))}
     </DropdownButton>
     </div>

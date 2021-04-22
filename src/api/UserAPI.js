@@ -30,4 +30,13 @@ const signupUser = (userObject) => {
   }).then(res => res)
 };
 
-export { login, getLoggedInUser, signupUser }
+const fetchUserByID = (user_id) => {
+  return fetch(`${BASE_URL}/core/user-list/${user_id}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `JWT ${localStorage.getItem("auth-user")}`
+    }
+  }).then(res => res)
+};
+
+export { login, getLoggedInUser, signupUser, fetchUserByID }

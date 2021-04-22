@@ -7,12 +7,12 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import BookAPI from '../api/BookAPI';
 import UserContext from '../contexts/UserContext';
+import SwapAlert from '../components/SwapAlert/SwapAlert.js';
 import { Link } from 'react-router-dom';
 
 function BookListPage(props) {
 
   const userContext = React.useContext(UserContext);
-  console.log('user_context: ', userContext.user)
 
   const [Books, setBooks] = useState([])
 
@@ -38,13 +38,11 @@ function BookListPage(props) {
     let user_books = await BookAPI.fetchBookList(userContext.user, props.type)
     let filtered_array = user_books.books.filter((item) => item != book_id)
     let book_dict = {"books": filtered_array}
-    console.log(book_dict)
     let data = await BookAPI.addBookToList(book_dict, userContext.user[props.type], props.type)
     getBooks()
   }
 
   function renderBookList() {
-    console.log("renderBookList")
     let tableData = Books.map((item, index) => {
      return (
         <ListGroup.Item key={index}>
@@ -57,7 +55,8 @@ function BookListPage(props) {
                 <Button>Edit</Button>
                 <Button id={item.id} onClick={() => handleButtonClick(item.id)}>Delete</Button>
               </Col>
-              <Col>One other person has this book!
+              <Col>
+                <SwapAlert title={item.title} author={item.author} book_id={item.id}></SwapAlert>
               </Col>
             </Row>
           </Container>
@@ -70,7 +69,7 @@ function BookListPage(props) {
   return (
     <div>
       <div>
-        <Link to="/add-book" className="btn btn-primary" type="my_books">Add Book</Link>
+        <Link to="/add-book" className="btn btn-primary" type={props.type}>Add Book</Link>
       </div>
       <ListGroup>
         { renderBookList() }

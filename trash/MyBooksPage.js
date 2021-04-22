@@ -12,7 +12,6 @@ import { Link } from 'react-router-dom';
 function MyBooksPage(props) {
 
   const userContext = React.useContext(UserContext);
-  console.log(userContext.user)
 
   const [Books, setBooks] = useState([])
 
@@ -30,20 +29,15 @@ function MyBooksPage(props) {
   }
 
   async function getBook(book_id) {
-    // return await BookAPI.fetchBooksByID(book_id)
     let book = await BookAPI.fetchBooksByID(book_id)
-    // console.log(book)
     setBooks(Books.concat(book))
   }
   
   useEffect(() => {
-    console.log('useEffect11')
     getBooks()
   }, [userContext.user])
 
   function renderBookList() {
-    console.log('renderBookList')
-    console.log(Books)
     let tableData = Books.map((item, index) => {
      return (
         <ListGroup.Item key={index}>

@@ -7,6 +7,7 @@ import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import BookListPage from './pages/BookListPage.js';
 import AllBooksPage from './pages/AllBooksPage.js';
+import SwapPage from './pages/SwapPage.js';
 import { getLoggedInUser, login } from './api/UserAPI';
 import { React, useState, useEffect} from 'react';
 import UserContext from './contexts/UserContext.js';
@@ -17,12 +18,10 @@ function App() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    console.log(user)
     const getUser = async () => {
       if (localStorage.getItem("auth-user") !== 'null') {
         let response = await getLoggedInUser(localStorage.getItem("auth-user"));
         let data = await response.json();
-        console.log('data', data)
         if (data.username) {
           setIsLoggedIn(true);
           setUser(data);
@@ -68,7 +67,6 @@ function App() {
   }
 
   const renderHomePage = () => {
-    console.log(user)
     return (
       <HomePage
         isLoggedIn={isLoggedIn}
@@ -91,6 +89,7 @@ function App() {
             <Route exact path="/signup" component={SignupPage} />
             <Route exact path="/wish-list" render={() => <BookListPage type="wish_list"/>} />
             <Route exact path="/all-books" component={AllBooksPage} />
+            <Route exact path="/swaps" component={SwapPage} />
           </div>
         </Router>
       </UserContext.Provider>

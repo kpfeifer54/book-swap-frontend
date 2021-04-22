@@ -12,19 +12,26 @@ import NYTimesAPI from '../../api/NYTimesAPI';
 function BookList(props) {
 
   const userContext = React.useContext(UserContext);
-  console.log('user_context: ', userContext.user)
 
   const [Books, setBooks] = useState([])
 
+  async function getBook(book_id) {
+    return await BookAPI.fetchBooksByID(book_id)
+  }
+
   async function getBooks() {
-    console.log('getting books on book list page')
     if (props.list_type === "all-books") {
-      let book_list = await BookAPI.fetchBooks()
+      let book_list = []
+      let book_lists = await BookAPI.fetchAllBookLists("book_list")
+        for (let list of book_lists) {
+          for (let book of list.books) {
+            let book_details = await getBook(book)
+            book_list.push(book_details)
+          }
+        }
       setBooks(book_list)
     } else {
-      console.log('calling NYTImes')
       let book_list = await NYTimesAPI.fetchBestSellers(props.list_type)
-      console.log(book_list.results.books)
       setBooks(book_list.results.books)
     }
   }
@@ -57,9 +64,6 @@ function BookList(props) {
   }
 
   function renderBookList() {
-    console.log('on the book list page')
-    console.log(props.list_type)
-    console.log(Books)
     let tableData = Books.map((item, index) => {
      return (
         <ListGroup.Item key={index}>
