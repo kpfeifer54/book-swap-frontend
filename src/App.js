@@ -2,11 +2,11 @@ import './App.css';
 import AppNav from './components/AppNav/AppNav.js';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage.js';
-import MyBooksPage from './pages/MyBooksPage.js';
 import AddBookPage from './pages/AddBookPage.js';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
-import WishListPage from './pages/WishListPage.js';
+import BookListPage from './pages/BookListPage.js';
+import AllBooksPage from './pages/AllBooksPage.js';
 import { getLoggedInUser, login } from './api/UserAPI';
 import { React, useState, useEffect} from 'react';
 import UserContext from './contexts/UserContext.js';
@@ -80,16 +80,17 @@ function App() {
 
   return (
     <div className="App">
-      <UserContext.Provider value={{ user: user }}>
+      <UserContext.Provider value={{user: user}}>
         <AppNav/>
         <Router>
           <div>
             <Route exact path="/" component={renderHomePage} />
-            <Route exact path="/my-books" component={MyBooksPage} />
+            <Route exact path="/my-books" render={() => <BookListPage type="book_list"/>} />
             <Route exact path="/add-book" component={AddBookPage} />
             <Route exact path="/login" render={renderLoginPage} />
             <Route exact path="/signup" component={SignupPage} />
-            <Route exact path="/wish-list" component={WishListPage} />
+            <Route exact path="/wish-list" render={() => <BookListPage type="wish_list"/>} />
+            <Route exact path="/all-books" component={AllBooksPage} />
           </div>
         </Router>
       </UserContext.Provider>

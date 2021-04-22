@@ -11,7 +11,7 @@ function AddBookPage(props)  {
       title: event.target.elements[0].value,
       author: event.target.elements[1].value,
       description: event.target.elements[2].value,
-      image: event.target.elements[3].value
+      book_image: event.target.elements[3].value
     }
       let data = await BookAPI.addBook(bookObject)
       console.log(data)

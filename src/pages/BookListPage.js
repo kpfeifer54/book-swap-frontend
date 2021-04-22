@@ -9,7 +9,7 @@ import BookAPI from '../api/BookAPI';
 import UserContext from '../contexts/UserContext';
 import { Link } from 'react-router-dom';
 
-function WishListPage(props) {
+function BookListPage(props) {
 
   const userContext = React.useContext(UserContext);
   console.log('user_context: ', userContext.user)
@@ -18,11 +18,11 @@ function WishListPage(props) {
 
   async function getBooks() {
     if (userContext.user) {
-      let my_book_list = await BookAPI.fetchWishList(userContext.user.wish_list)
-      let book_array = await Promise.all(my_book_list.books.map(async (book) => {
-        return await getBook(book)
-      }))
-      setBooks(book_array)
+        let my_book_list = await BookAPI.fetchBookList(userContext.user, props.type)
+        let book_array = await Promise.all(my_book_list.books.map(async (book) => {
+          return await getBook(book)
+        }))
+        setBooks(book_array)
     }
   }
 
@@ -32,20 +32,32 @@ function WishListPage(props) {
   
   useEffect(() => {
     getBooks()
-  }, [])
+  }, [userContext.user])
+
+  async function handleButtonClick(book_id) {
+    let user_books = await BookAPI.fetchBookList(userContext.user, props.type)
+    let filtered_array = user_books.books.filter((item) => item != book_id)
+    let book_dict = {"books": filtered_array}
+    console.log(book_dict)
+    let data = await BookAPI.addBookToList(book_dict, userContext.user[props.type], props.type)
+    getBooks()
+  }
 
   function renderBookList() {
+    console.log("renderBookList")
     let tableData = Books.map((item, index) => {
      return (
         <ListGroup.Item key={index}>
           <Container>
             <Row>
               <Col sm={10}>
-                <BookItem title={item.title} author={item.author} description={item.description} image={item.image}/>
+                <BookItem title={item.title} author={item.author} description={item.description} image={item.book_image}/>
               </Col>
               <Col>
                 <Button>Edit</Button>
-                <Button>Delete</Button>
+                <Button id={item.id} onClick={() => handleButtonClick(item.id)}>Delete</Button>
+              </Col>
+              <Col>One other person has this book!
               </Col>
             </Row>
           </Container>
@@ -62,24 +74,9 @@ function WishListPage(props) {
       </div>
       <ListGroup>
         { renderBookList() }
-        <ListGroup.Item>
-          <Container>
-            <Row>
-              <Col sm={10}>
-                <BookItem/>
-              </Col>
-              <Col>
-                <Button>Edit</Button>
-                <Button>Delete</Button>
-              </Col>
-            </Row>
-          </Container>
-        </ListGroup.Item>
-        <ListGroup.Item><BookItem/></ListGroup.Item>
-        <ListGroup.Item><BookItem/></ListGroup.Item>
       </ListGroup>
     </div>
   );
 }
 
-export default WishListPage;
+export default BookListPage;

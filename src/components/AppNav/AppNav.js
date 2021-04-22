@@ -11,8 +11,9 @@ function AppNav() {
       <Nav className="mr-auto">
         <Nav.Link href="/">Home</Nav.Link>
         <Nav.Link href="/my-books">My Books</Nav.Link>
-        <Nav.Link href="#pricing">Wish List</Nav.Link>
+        <Nav.Link href="/wish-list">Wish List</Nav.Link>
         <Nav.Link href="#pricing">Swaps</Nav.Link>
+        <Nav.Link href="/all-books">Browse Books</Nav.Link>
       </Nav>
       <Form inline>
         <FormControl type="text" placeholder="Search" className="mr-sm-2" />

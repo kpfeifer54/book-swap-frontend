@@ -22,10 +22,6 @@ async function addBook(bookObject) {
   return data
 }
 
-async function addBookToMyList(book_id) {
-
-}
-
 async function fetchBooksByID(book_id) {
   let response = await fetch(`${BASE_URL}/books/books/${book_id}`, {
     headers: {
@@ -35,8 +31,8 @@ async function fetchBooksByID(book_id) {
   return data
 }
 
-async function fetchBookList() {
-  let response = await fetch(`${BASE_URL}/books/my-book-list/`, {
+async function fetchBookList(user, list_type) {
+  let response = await fetch(`${BASE_URL}/books/${list_type}/${user[list_type]}`, {
     headers: {
     'Authorization': `JWT ${localStorage.getItem("auth-user")}`
   }})
@@ -44,11 +40,14 @@ async function fetchBookList() {
   return data
 }
 
-async function fetchWishList(list_id) {
-  let response = await fetch(`${BASE_URL}/books/wish-list/${list_id}`, {
+async function addBookToList(book_list, list_id, list_type) {
+  let response = await fetch(`${BASE_URL}/books/${list_type}/${list_id}/`, {
     headers: {
-    'Authorization': `JWT ${localStorage.getItem("auth-user")}`
-  }})
+      'Content-Type': 'application/json',
+      'Authorization': `JWT ${localStorage.getItem("auth-user")}`
+    },
+    method: 'PATCH',
+    body: JSON.stringify(book_list)})
   let data = response.json()
   return data
 }
@@ -58,5 +57,5 @@ export default {
   addBook,
   fetchBooksByID,
   fetchBookList,
-  fetchWishList
+  addBookToList
 }
