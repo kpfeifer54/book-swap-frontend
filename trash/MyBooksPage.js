@@ -29,7 +29,7 @@ function MyBooksPage(props) {
   }
 
   async function getBook(book_id) {
-    let book = await BookAPI.fetchBooksByID(book_id)
+    let book = await BookAPI.fetchBookByID(book_id)
     setBooks(Books.concat(book))
   }
   

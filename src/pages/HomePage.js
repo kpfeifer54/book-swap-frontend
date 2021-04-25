@@ -1,43 +1,33 @@
 import React from 'react';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import Button from 'react-bootstrap/Button';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import BookCarousel from '../components/BookCarousel/BookCarousel.js';
 
 function HomePage({ isLoggedIn, user, handleLogout }) {
+
+  const history = useHistory();
+
   return (
     <div>
-      <Jumbotron>
+      <Jumbotron fluid>
         <h1>Welcome to Book Swap!</h1>
-        <p>
-          This is a site for swapping books
-        </p>
-        <p>
-          <Button variant="primary">Sign up</Button>
-        </p>
-      </Jumbotron>
-      <div>
-        Home Page
+        <p>This is a site for swapping books</p>
+        <BookCarousel></BookCarousel>
+        <br></br>
         {
-          user &&
+          !isLoggedIn &&
           <div>
-            Hi {user.username}
-          </div>
-        }
-        {
-          !isLoggedIn
-          ?
-          <div>
-            <div>
+            {/* <div>
               <Link to='/login'>Login</Link>
-            </div>
-            <div>
+            </div> */}
+            {/* <div>
               <Link to='/signup'>Signup</Link>
-            </div>
+            </div> */}
+            <Button onClick={() => {history.push("/signup")}}>Signup</Button>
           </div>
-          :
-          <button onClick={handleLogout}>Logout</button>
         }
-      </div>
+      </Jumbotron>
     </div>
   );
 }

@@ -1,26 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import UserContext from '../contexts/UserContext';
+import React, { useState } from 'react';
 import BestSellersSelector from '../components/BestSellersSelector/BestSellersSelector.js';
 import BookList from '../components/BookList/BookList.js';
 
-function AllBooksPage(props) {
+function AllBooksPage() {
 
-  const userContext = React.useContext(UserContext);
-
-  const [BookListType, setBookListType] = useState("all-books")
+  const [BookListType, setBookListType] = useState("books")
 
   function handleSelect(e) {
     setBookListType(e)
   }
 
-  function renderBookList() {
-    return <BookList list_type={BookListType}/>
-  }
-
   return (
     <div>
       <BestSellersSelector handleSelect={handleSelect}/>
-      { renderBookList() }
+      <BookList list_type={BookListType}/>
     </div>
   );
 }

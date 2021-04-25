@@ -1,5 +1,7 @@
 import React from 'react';
 import { signupUser } from '../api/UserAPI';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 
 const SignupPage = (props) => {
   const { history } = props;
@@ -8,6 +10,7 @@ const SignupPage = (props) => {
     let userObject = {
       'username': evt.target.username.value,
       'password': evt.target.password.value,
+      'email': evt.target.email.value,
     }
     let response = await signupUser(userObject);
     let data = await response.json();
@@ -20,14 +23,24 @@ const SignupPage = (props) => {
 
   return (
     <div>
-      Signup Page
-      <form onSubmit={handleSignup}>
-        <label>UserName:</label>
-        <input type='text' placeholder='RonBurgondy' name='username' />
-        <label>Password:</label>
-        <input type='password' name='password' />
-        <button type='submit' >Sign Up</button>
-      </form>
+      <h1>Signup Page</h1>
+      <Form className="Login-form" onSubmit={handleSignup}>
+      <Form.Group controlId="formBasicUsername">
+        <Form.Label>Username</Form.Label>
+        <Form.Control type='text' placeholder='Enter username' name='username' />
+      </Form.Group>
+      <Form.Group controlId="formBasicUsername">
+        <Form.Label>Email</Form.Label>
+        <Form.Control type='email' placeholder='Enter email' name='email' />
+      </Form.Group>
+      <Form.Group controlId="formBasicPassword">
+        <Form.Label>Password</Form.Label>
+        <Form.Control type="password" placeholder="Password" name='password' />
+      </Form.Group>
+      <Button variant="primary" type="submit">
+        Submit
+      </Button>
+    </Form>
     </div>
   );
 };

@@ -2,13 +2,19 @@ import React, { useState, useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import BookAPI from '../api/BookAPI';
+import { fetchUserByID } from '../api/UserAPI';
 import UserContext from '../contexts/UserContext';
+import { Link } from 'react-router-dom';
 
-function SwapPage(props) {
+function SwapPage() {
 
   const userContext = React.useContext(UserContext);
 
   const [Swaps, setSwaps] = useState([])
+
+  useEffect(() => {
+    getSwaps()
+  }, [userContext.user])
 
   async function getSwaps() {
     if (userContext.user) {
@@ -18,20 +24,26 @@ function SwapPage(props) {
           let book2_detail = await getBook(swap.book2)
           swap.book1 = book1_detail
           swap.book2 = book2_detail
+          if (swap.user1 === userContext.user.id) {
+            let response = await fetchUserByID(swap.user2)
+            let data = await response.json()
+            swap["email"] = data.email
+          } else {
+            let response = await fetchUserByID(swap.user1)
+            let data = await response.json()
+            swap["email"] = data.email
+          }
           return swap
         }))
+        console.log(swap_array)
         setSwaps(swap_array)
     }
   }
 
   async function getBook(book_id) {
-    let book_detail = await BookAPI.fetchBooksByID(book_id)
+    let book_detail = await BookAPI.fetchBookByID(book_id)
     return book_detail
   }
-  
-  useEffect(() => {
-    getSwaps()
-  }, [userContext.user])
 
   async function handleButtonClickAccept(swap_id, status) {
     await BookAPI.editSwap(swap_id, {"status": status})
@@ -41,25 +53,56 @@ function SwapPage(props) {
   async function handleButtonClickDelete(swap_id) {
     await BookAPI.deleteSwap(swap_id)
     getSwaps()
+  }
+
+  function renderStatus(swap) {
+    if (swap.status === "Accepted") {
+      return `Swap Accepted. Email ${swap.email} to arrange a swap.`
+    } else {
+      return swap.status
     }
+  }
 
   function renderSwapList() {
-    
-    let tableData = Swaps.map((item) => {
+    let tableData = Swaps.map((item, index) => {
      return (
-          <tr>
-            <td>{item.book1.title}</td>
-            <td>{item.book2.title}</td>
-            <td>{item.status}</td>
-            {(item.user2 == userContext.user.id) 
-            ? (<td><Button id={item.id} onClick={() => handleButtonClickAccept(item.id, "Accepted")}>Accept Swap</Button></td>)
-            : <td>Pending</td>}
-            {(item.user2 == userContext.user.id) 
-            ? (<td><Button id={item.id} onClick={() => handleButtonClickDelete(item.id)}>Decline Swap</Button></td>)
-            : <td></td>}
+       <tbody>
+        {(item.user1 === userContext.user.id)?
+          <tr key={index}>
+            <td><Link to={`books/${item.book1.id}`}>{item.book1.title}</Link></td>
+            <td><Link to={`books/${item.book2.id}`}>{item.book2.title}</Link></td>
+            <td>{renderStatus(item)}</td>
+            <td>
+              {item.status !== "Accepted" ?
+              <p></p>
+              : <div>
+                <Button id={item.id} onClick={() => handleButtonClickAccept(item.id, "Complete")}>Swap Complete</Button>
+                <Button id={item.id} onClick={() => handleButtonClickDelete(item.id)}>Cancel Swap</Button>
+              </div>
+              }
+            </td>
           </tr>
-     )
-    }) 
+          :
+          <tr key={index}>
+            <td><Link to={`books/${item.book2.id}`}>{item.book2.title}</Link></td>
+            <td><Link to={`books/${item.book1.id}`}>{item.book1.title}</Link></td>
+            <td>{renderStatus(item)}</td>
+            <td>
+              {item.status !== "Accepted" ?
+              <div>
+                <Button id={item.id} onClick={() => handleButtonClickAccept(item.id, "Accepted")}>Accept Swap</Button>
+                <Button id={item.id} onClick={() => handleButtonClickDelete(item.id)}>Decline Swap</Button>
+              </div> 
+              : <div>
+              <Button id={item.id} onClick={() => handleButtonClickAccept(item.id, "Complete")}>Swap Complete</Button>
+              <Button id={item.id} onClick={() => handleButtonClickDelete(item.id)}>Cancel Swap</Button>
+            </div>
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+     )})
     return tableData
   }
 
@@ -68,16 +111,13 @@ function SwapPage(props) {
       <Table striped bordered hover>
         <thead>
           <tr>
-            <th>Book1</th>
-            <th>Book2</th>
+            <th>Your Book</th>
+            <th>Proposed Swap</th>
             <th>Status</th>
-            <th></th>
-            <th></th>
+            <th>Accept / Decline</th>
           </tr>
         </thead>
-        <tbody>
           {renderSwapList()}
-        </tbody>
       </Table>
     </div>
   );

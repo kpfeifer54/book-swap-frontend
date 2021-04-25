@@ -24,7 +24,7 @@ function AddSwapPage(props) {
   }
 
   async function getBook(book_id) {
-    return await BookAPI.fetchBooksByID(book_id)
+    return await BookAPI.fetchBookByID(book_id)
   }
   
   useEffect(() => {
@@ -32,7 +32,7 @@ function AddSwapPage(props) {
   }, [userContext.user])
 
   async function handleSelect(e) {
-    let selected_book = await BookAPI.fetchBooksByID(e)
+    let selected_book = await BookAPI.fetchBookByID(e)
     setSelectedBook(selected_book)
   }
 

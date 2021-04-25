@@ -1,6 +1,7 @@
 // let BASE_URL = "https://book-swap-backend.herokuapp.com"
 let BASE_URL = "http://localhost:8000"
 
+//Books model create, read, update
 async function fetchBooks() {
   let response = await fetch(`${BASE_URL}/books/books/`, {
     headers: {
@@ -22,7 +23,7 @@ async function addBook(bookObject) {
   return data
 }
 
-async function fetchBooksByID(book_id) {
+async function fetchBookByID(book_id) {
   let response = await fetch(`${BASE_URL}/books/books/${book_id}`, {
     headers: {
     'Authorization': `JWT ${localStorage.getItem("auth-user")}`
@@ -31,6 +32,19 @@ async function fetchBooksByID(book_id) {
   return data
 }
 
+async function editBook(book_id, bookObject) {
+  let response = await fetch(`${BASE_URL}/books/books/${book_id}/`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `JWT ${localStorage.getItem("auth-user")}`
+    },
+    method: 'PATCH',
+    body: JSON.stringify(bookObject)})
+  let data = response.json()
+  return data
+}
+
+// List models read, update, delete
 async function fetchBookList(user, list_type) {
   let response = await fetch(`${BASE_URL}/books/${list_type}/${user[list_type]}`, {
     headers: {
@@ -60,6 +74,8 @@ async function fetchAllBookLists(list_type) {
   let data = response.json()
   return data
 }
+
+//Swap model create, read, update, delete
 
 async function addSwap(swapObject) {
   let response = await fetch(`${BASE_URL}/books/swap/`, {
@@ -106,12 +122,13 @@ async function deleteSwap(swap_id) {
 export default {
   fetchBooks,
   addBook,
-  fetchBooksByID,
+  fetchBookByID,
   fetchBookList,
   addBookToList,
   fetchAllBookLists,
   addSwap,
   fetchSwapList,
   editSwap,
-  deleteSwap
+  deleteSwap,
+  editBook,
 }

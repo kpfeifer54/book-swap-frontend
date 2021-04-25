@@ -1,3 +1,4 @@
+import 'bootswatch/dist/flatly/bootstrap.min.css';
 import './App.css';
 import AppNav from './components/AppNav/AppNav.js';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
@@ -8,6 +9,7 @@ import SignupPage from './pages/SignupPage';
 import BookListPage from './pages/BookListPage.js';
 import AllBooksPage from './pages/AllBooksPage.js';
 import SwapPage from './pages/SwapPage.js';
+import BookDetailPage from './pages/BookDetailPage.js';
 import { getLoggedInUser, login } from './api/UserAPI';
 import { React, useState, useEffect} from 'react';
 import UserContext from './contexts/UserContext.js';
@@ -33,7 +35,6 @@ function App() {
     }
   }, [user])
 
-
   const handleLogin = async (evt) => {
     evt.preventDefault();
     let userObject = {
@@ -50,6 +51,7 @@ function App() {
   }
 
   const handleLogout = () => {
+    window.location.replace("/")
     localStorage.setItem("auth-user", null);
     setIsLoggedIn(false);
     setUser(null);
@@ -79,17 +81,19 @@ function App() {
   return (
     <div className="App">
       <UserContext.Provider value={{user: user}}>
-        <AppNav/>
         <Router>
+          <AppNav handleLogout={handleLogout}/>
           <div>
             <Route exact path="/" component={renderHomePage} />
             <Route exact path="/my-books" render={() => <BookListPage type="book_list"/>} />
-            <Route exact path="/add-book" component={AddBookPage} />
+            <Route exact path="/add-book" render={() => <AddBookPage book_id=""/>} />
             <Route exact path="/login" render={renderLoginPage} />
             <Route exact path="/signup" component={SignupPage} />
             <Route exact path="/wish-list" render={() => <BookListPage type="wish_list"/>} />
-            <Route exact path="/all-books" component={AllBooksPage} />
+            <Route exact path="/books" component={AllBooksPage} />
             <Route exact path="/swaps" component={SwapPage} />
+            <Route exact path="/books/:bookID" component={BookDetailPage} />
+            <Route exact path="/books/:bookID/edit" component={AddBookPage} />
           </div>
         </Router>
       </UserContext.Provider>

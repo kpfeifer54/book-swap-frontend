@@ -27,7 +27,7 @@ function BookListPage(props) {
   }
 
   async function getBook(book_id) {
-    return await BookAPI.fetchBooksByID(book_id)
+    return await BookAPI.fetchBookByID(book_id)
   }
   
   useEffect(() => {
@@ -36,10 +36,11 @@ function BookListPage(props) {
 
   async function handleButtonClick(book_id) {
     let user_books = await BookAPI.fetchBookList(userContext.user, props.type)
-    let filtered_array = user_books.books.filter((item) => item != book_id)
+    let filtered_array = user_books.books.filter((item) => item !== book_id)
     let book_dict = {"books": filtered_array}
     let data = await BookAPI.addBookToList(book_dict, userContext.user[props.type], props.type)
     getBooks()
+    return data
   }
 
   function renderBookList() {
@@ -48,15 +49,16 @@ function BookListPage(props) {
         <ListGroup.Item key={index}>
           <Container>
             <Row>
-              <Col sm={10}>
+              <Col sm={7}>
                 <BookItem title={item.title} author={item.author} description={item.description} image={item.book_image}/>
               </Col>
               <Col>
-                <Button>Edit</Button>
-                <Button id={item.id} onClick={() => handleButtonClick(item.id)}>Delete</Button>
+                <Link to={`books/${item.id}/edit`}><Button className="App-button">Edit</Button></Link>
+                <Button className="App-button" id={item.id} onClick={() => handleButtonClick(item.id)}>Delete</Button>
               </Col>
               <Col>
-                <SwapAlert title={item.title} author={item.author} book_id={item.id}></SwapAlert>
+              {props.type === "wish_list" &&
+                <SwapAlert title={item.title} author={item.author} book_id={item.id}></SwapAlert>}
               </Col>
             </Row>
           </Container>
@@ -68,9 +70,14 @@ function BookListPage(props) {
 
   return (
     <div>
+      {(props.type === "book_list") ?
+        <h1> My Books </h1> :
+        <h1> Wish List </h1>
+      }
       <div>
-        <Link to="/add-book" className="btn btn-primary" type={props.type}>Add Book</Link>
+        <Link to="/add-book" className="App-button btn btn-primary" type={props.type}>Add Book</Link>
       </div>
+      {/* <BookList list_type={props.type}></BookList> */}
       <ListGroup>
         { renderBookList() }
       </ListGroup>
