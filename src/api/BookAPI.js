@@ -12,6 +12,7 @@ async function fetchBooks() {
 }
 
 async function addBook(bookObject) {
+  console.log(bookObject)
   let response = await fetch(`${BASE_URL}/books/books/`, {
     headers: {
       'Content-Type': 'application/json',
@@ -44,8 +45,18 @@ async function editBook(book_id, bookObject) {
   return data
 }
 
+async function deleteBook(book_id) {
+  let response = await fetch(`${BASE_URL}/books/books/${book_id}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `JWT ${localStorage.getItem("auth-user")}`
+    },
+    method: 'DELETE'})
+}
+
 // List models read, update, delete
 async function fetchBookList(user, list_type) {
+  console.log(`${user[list_type]}`)
   let response = await fetch(`${BASE_URL}/books/${list_type}/${user[list_type]}`, {
     headers: {
     'Authorization': `JWT ${localStorage.getItem("auth-user")}`
@@ -55,6 +66,9 @@ async function fetchBookList(user, list_type) {
 }
 
 async function addBookToList(book_list, list_id, list_type) {
+  console.log(list_type)
+  console.log(list_id)
+  console.log(JSON.stringify(book_list))
   let response = await fetch(`${BASE_URL}/books/${list_type}/${list_id}/`, {
     headers: {
       'Content-Type': 'application/json',
@@ -131,4 +145,5 @@ export default {
   editSwap,
   deleteSwap,
   editBook,
+  deleteBook,
 }

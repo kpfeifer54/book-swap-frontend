@@ -44,7 +44,7 @@ function MyBooksPage(props) {
           <Container>
             <Row>
               <Col sm={10}>
-                <BookItem title={item.title} author={item.author} description={item.description} image={item.book_image}/>
+                <BookItem book={item}/>
               </Col>
               <Col>
                 <Button>Edit</Button>

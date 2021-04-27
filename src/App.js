@@ -7,9 +7,11 @@ import AddBookPage from './pages/AddBookPage.js';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import BookListPage from './pages/BookListPage.js';
+import MyBooksPage from './pages/MyBooksPage.js';
 import AllBooksPage from './pages/AllBooksPage.js';
 import SwapPage from './pages/SwapPage.js';
 import BookDetailPage from './pages/BookDetailPage.js';
+import BestSellersPage from './pages/BestSellersPage.js';
 import { getLoggedInUser, login } from './api/UserAPI';
 import { React, useState, useEffect} from 'react';
 import UserContext from './contexts/UserContext.js';
@@ -86,7 +88,7 @@ function App() {
           <div>
             <Route exact path="/" component={renderHomePage} />
             <Route exact path="/my-books" render={() => <BookListPage type="book_list"/>} />
-            <Route exact path="/add-book" render={() => <AddBookPage book_id=""/>} />
+            <Route exact path="/:list/add-book" component={AddBookPage} />
             <Route exact path="/login" render={renderLoginPage} />
             <Route exact path="/signup" component={SignupPage} />
             <Route exact path="/wish-list" render={() => <BookListPage type="wish_list"/>} />
@@ -94,6 +96,7 @@ function App() {
             <Route exact path="/swaps" component={SwapPage} />
             <Route exact path="/books/:bookID" component={BookDetailPage} />
             <Route exact path="/books/:bookID/edit" component={AddBookPage} />
+            <Route exact path="/best-sellers" component={BestSellersPage} />
           </div>
         </Router>
       </UserContext.Provider>

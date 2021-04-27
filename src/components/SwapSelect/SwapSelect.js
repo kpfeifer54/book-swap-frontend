@@ -12,7 +12,7 @@ function SwapSelect(props) {
   const userContext = React.useContext(UserContext);
 
   const [MyBooks, setMyBooks] = useState([])
-  const [SelectedBook, setSelectedBook] = useState()
+  const [SelectedBook, setSelectedBook] = useState({title: "Select Book To Swap"})
   const [SwapStatus, setSwapStatus] = useState(false)
 
   async function getBooks() {
@@ -30,7 +30,9 @@ function SwapSelect(props) {
   }, [userContext.user])
 
   async function handleSelect(e) {
+    console.log(e)
     let selected_book = await BookAPI.fetchBookByID(e)
+    console.log(selected_book)
     setSelectedBook(selected_book)
   }
 
@@ -45,7 +47,7 @@ function SwapSelect(props) {
       user2: props.user2,
       book1: SelectedBook.id,
       book2: props.book_id,
-      status: "proposed"
+      status: "Proposed"
     }
     setSwapStatus(true)
       return await BookAPI.addSwap(swapObject)
@@ -53,13 +55,13 @@ function SwapSelect(props) {
 
   return (
     <div>
-        <DropdownButton className="App-button" id="dropdown-item-button" title="Select Book To Swap" onSelect={handleSelect}>
+        <DropdownButton className="App-button" id="dropdown-item-button" title={SelectedBook.title} onSelect={(e) => handleSelect(e)}>
             {MyBooks.map((item) => (
             <Dropdown.Item key={item.id} eventKey={item.id}>{item.title} by {item.author}</Dropdown.Item>
             ))}
         </DropdownButton>
         <Button className="App-button" onClick={(e) => handleButtonClick(e)}>Propose Swap</Button>
-        {SwapStatus && <p>Swapped Submitted!</p>}
+        {SwapStatus && <p>Swap Submitted!</p>}
     </div>
   );
 }

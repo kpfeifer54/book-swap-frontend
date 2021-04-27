@@ -43,7 +43,7 @@ function AddSwapPage(props) {
       user2: props.user2,
       book1: SelectedBook.id,
       book2: props.book_id,
-      status: "proposed"
+      status: "Proposed"
     }
     return await BookAPI.addSwap(swapObject)
   }
@@ -56,9 +56,9 @@ function AddSwapPage(props) {
             ))}
         </DropdownButton>
         <h2>Swap this book</h2>
-        {SelectedBook && <BookItem title={SelectedBook.title} author={SelectedBook.author} description={SelectedBook.description} image={SelectedBook.book_image}/>}
+        {SelectedBook && <BookItem book={SelectedBook}/>}
         <h2>For this book</h2>
-        {SelectedBook && <BookItem title={SelectedBook.title} author={SelectedBook.author} description={SelectedBook.description} image={SelectedBook.book_image}/>}
+        {SelectedBook && <BookItem book={SelectedBook}/>}
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="image">
             <Form.Label>Swap This Book</Form.Label>

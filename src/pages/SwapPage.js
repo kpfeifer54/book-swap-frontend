@@ -5,6 +5,7 @@ import BookAPI from '../api/BookAPI';
 import { fetchUserByID } from '../api/UserAPI';
 import UserContext from '../contexts/UserContext';
 import { Link } from 'react-router-dom';
+import SwapButtons from '../components/SwapButtons/SwapButtons.js';
 
 function SwapPage() {
 
@@ -66,39 +67,20 @@ function SwapPage() {
   function renderSwapList() {
     let tableData = Swaps.map((item, index) => {
      return (
-       <tbody>
+       <tbody key={index}>
         {(item.user1 === userContext.user.id)?
           <tr key={index}>
             <td><Link to={`books/${item.book1.id}`}>{item.book1.title}</Link></td>
             <td><Link to={`books/${item.book2.id}`}>{item.book2.title}</Link></td>
             <td>{renderStatus(item)}</td>
-            <td>
-              {item.status !== "Accepted" ?
-              <p></p>
-              : <div>
-                <Button id={item.id} onClick={() => handleButtonClickAccept(item.id, "Complete")}>Swap Complete</Button>
-                <Button id={item.id} onClick={() => handleButtonClickDelete(item.id)}>Cancel Swap</Button>
-              </div>
-              }
-            </td>
+            <SwapButtons swap_status={item.status} my_swap={true} handleButtonClickAccept={handleButtonClickAccept} handleButtonClickDelete={handleButtonClickDelete} book_id={item.id}></SwapButtons>
           </tr>
           :
           <tr key={index}>
             <td><Link to={`books/${item.book2.id}`}>{item.book2.title}</Link></td>
             <td><Link to={`books/${item.book1.id}`}>{item.book1.title}</Link></td>
             <td>{renderStatus(item)}</td>
-            <td>
-              {item.status !== "Accepted" ?
-              <div>
-                <Button id={item.id} onClick={() => handleButtonClickAccept(item.id, "Accepted")}>Accept Swap</Button>
-                <Button id={item.id} onClick={() => handleButtonClickDelete(item.id)}>Decline Swap</Button>
-              </div> 
-              : <div>
-              <Button id={item.id} onClick={() => handleButtonClickAccept(item.id, "Complete")}>Swap Complete</Button>
-              <Button id={item.id} onClick={() => handleButtonClickDelete(item.id)}>Cancel Swap</Button>
-            </div>
-              }
-            </td>
+            <SwapButtons swap_status={item.status} my_swap={false} handleButtonClickAccept={handleButtonClickAccept} handleButtonClickDelete={handleButtonClickDelete} book_id={item.id}></SwapButtons>
           </tr>
         }
       </tbody>
@@ -108,6 +90,8 @@ function SwapPage() {
 
   return (
     <div>
+      <br></br>
+      <h1>Swaps</h1>
       <Table striped bordered hover>
         <thead>
           <tr>

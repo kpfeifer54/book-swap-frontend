@@ -1,30 +1,34 @@
 import React from 'react';
-import { Navbar, Nav, Button } from 'react-bootstrap';
+import { Navbar, Nav, Button, NavDropdown } from 'react-bootstrap';
 import UserContext from '../../contexts/UserContext';
 import { Link } from 'react-router-dom';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function AppNav(props) {
 
   const userContext = React.useContext(UserContext);
   
   return (
-    <Navbar bg="light" variant="light">
+    <Navbar bg="primary" variant="dark">
       <Navbar.Brand as={Link} to="/">Book Swap</Navbar.Brand>
       { userContext.user &&
         <Nav className="mr-auto">
           <Nav.Link as={Link} to="/">Home</Nav.Link>
-          <Nav.Link as={Link} to="/books">Browse Books</Nav.Link>
-          <Nav.Link as={Link} to="/my-books">My Books</Nav.Link>
-          <Nav.Link as={Link} to="/wish-list">Wish List</Nav.Link>
-          <Nav.Link as={Link} to="/swaps">Swaps</Nav.Link>
+          <NavDropdown title="Browse Books" id="basic-nav-dropdown">
+            <NavDropdown.Item as={Link} to="/books">User Books</NavDropdown.Item>
+            <NavDropdown.Item as={Link} to="/best-sellers">Best Sellers</NavDropdown.Item>
+          </NavDropdown>
         </Nav>
       }   
       { userContext.user ?
         <Nav className="justify-content-end">
-          <Nav.Link disabled>Hi { userContext.user.username }</Nav.Link>
-          <Nav.Item>
-            <Button onClick={props.handleLogout}>Logout</Button>
-          </Nav.Item>
+          <NavDropdown title={`Hello ${ userContext.user.username }`} id="basic-nav-dropdown">
+            <NavDropdown.Item as={Link} to="/my-books">My Books</NavDropdown.Item>
+            <NavDropdown.Item as={Link} to="/wish-list">Wish List</NavDropdown.Item>
+            <NavDropdown.Item as={Link} to="/swaps">Swaps</NavDropdown.Item>
+            <NavDropdown.Item onClick={props.handleLogout}>Logout</NavDropdown.Item>
+            </NavDropdown>
         </Nav>
         :
         <Nav className="justify-content-end">

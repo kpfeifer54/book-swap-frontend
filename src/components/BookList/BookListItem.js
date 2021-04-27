@@ -43,13 +43,9 @@ function BookListItem(props) {
   function renderButtons(item) {
     return (
       <div>
-        { (props.list_type === "book_list" || props.list_type === "wish_list") ?
-        <div></div>:
-        <div>
-          <Button className="App-button" id={item} onClick={() => handleButtonClick(item, "book_list")}>Add To My Book List</Button>
-          <Button className="App-button" id={item} onClick={() => handleButtonClick(item, "wish_list")}>Add To Wish List</Button>
+          <Button className="App-button" id={item} onClick={() => handleButtonClick(item, "book_list")}>+ My Books</Button>
+          <Button className="App-button" id={item} onClick={() => handleButtonClick(item, "wish_list")}>+ Wish List</Button>
           {BookListStatus && <Alert variant="light">Book Added!</Alert>}
-        </div>}
       </div>
     )
   }
@@ -59,13 +55,13 @@ function BookListItem(props) {
         <Container>
           <Row>
             <Col sm={7}>
-              <BookItem title={props.item.title} author={props.item.author} description={props.item.description} image={props.item.book_image}/>
+              <BookItem book={props.item}/>
             </Col>
             <Col>
               {renderButtons(props.item)}
             </Col>
             <Col>
-            {props.list_type === "books" && <SwapSelect user2={props.item.user} book_id={props.item.id} title={props.item.title} author={props.item.author}></SwapSelect>}
+            {props.list_type === "User Books" && <SwapSelect user2={props.item.user} book_id={props.item.id} title={props.item.title} author={props.item.author}></SwapSelect>}
             </Col>
           </Row>
         </Container>

@@ -17,7 +17,7 @@ function BookList(props) {
   }
 
   async function getBooks(list_type) {
-    if (list_type === "books") {
+    if (list_type === "User Books") {
       let book_list = []
       let book_lists = await BookAPI.fetchAllBookLists("book_list")
         console.log(book_lists)
