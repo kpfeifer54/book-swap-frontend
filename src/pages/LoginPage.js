@@ -1,15 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-const Login = ({isLoggedIn, handleLogout, handleLogin}) => {
+const Login = ({isLoggedIn, handleLogin}) => {
 
   const history = useHistory();
 
-  if (isLoggedIn) {
-    history.push("/");
-  }
+  useEffect(() => {
+    if (isLoggedIn) {
+      history.push("/");
+    }
+  }, [isLoggedIn])
+
 
   return (
     <div>

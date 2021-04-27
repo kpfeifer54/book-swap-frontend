@@ -29,7 +29,7 @@ const SignupPage = (props) => {
         <Form.Label>Username</Form.Label>
         <Form.Control type='text' placeholder='Enter Username' name='username' />
       </Form.Group>
-      <Form.Group controlId="formBasicUsername">
+      <Form.Group controlId="formBasicEmail">
         <Form.Label>Email</Form.Label>
         <Form.Control type='email' placeholder='Enter Email' name='email' />
       </Form.Group>

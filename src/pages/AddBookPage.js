@@ -12,16 +12,21 @@ function AddBookPage(props)  {
   const [List, setList] = useState()
   const [Book, setBook] = useState({title:"",author:"",description:"",book_image:""})
 
-  useEffect(async () => {
-    console.log(props.match.params.list)
-    let list = props.match.params.list
-    setList(list)
+  useEffect( () => {
+    async function fetchData() {
+      let list = props.match.params.list
+      setList(list)
+    }
+    fetchData();
   }, [props.match.params.list])
 
-  useEffect(async () => {
-    let bookId = props.match.params.bookID
-    let book_detail = await getBook(bookId)
-    setBook(book_detail)
+  useEffect( () => {
+    async function fetchData() {
+      let bookId = props.match.params.bookID
+      let book_detail = await getBook(bookId)
+      setBook(book_detail)
+    }
+    fetchData();
   }, [props.match.params.bookID])
 
   const history = useHistory();
@@ -39,7 +44,6 @@ function AddBookPage(props)  {
 
   async function handleSubmit(event) {
     event.preventDefault()
-    let book_id = null
     if (props.match.params.bookID) {
       //editing existing book
       const bookObject = {
@@ -48,8 +52,7 @@ function AddBookPage(props)  {
         description: event.target.elements[2].value,
         book_image: event.target.elements[3].value,
       }
-      let data = await BookAPI.editBook(props.match.params.bookID, bookObject)
-      book_id = data.id
+      await BookAPI.editBook(props.match.params.bookID, bookObject)
     } else {
       //adding new book
       let book_search = await getGoogleBook(event.target.elements[0].value, event.target.elements[1].value)

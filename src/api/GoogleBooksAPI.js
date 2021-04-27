@@ -8,6 +8,8 @@ async function fetchBook(title, author) {
   return data
 }
 
-export default {
+let GoogleBooksAPI = {
   fetchBook
 }
+
+export default GoogleBooksAPI

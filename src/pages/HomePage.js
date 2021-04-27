@@ -1,7 +1,7 @@
 import React from 'react';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import Button from 'react-bootstrap/Button';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import BookCarousel from '../components/BookCarousel/BookCarousel.js';
 
 function HomePage({ isLoggedIn, user, handleLogout }) {
@@ -18,12 +18,6 @@ function HomePage({ isLoggedIn, user, handleLogout }) {
         {
           !isLoggedIn &&
           <div>
-            {/* <div>
-              <Link to='/login'>Login</Link>
-            </div> */}
-            {/* <div>
-              <Link to='/signup'>Signup</Link>
-            </div> */}
             <Button onClick={() => {history.push("/signup")}}>Signup</Button>
           </div>
         }

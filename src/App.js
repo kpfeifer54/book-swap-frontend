@@ -63,7 +63,6 @@ function App() {
       <LoginPage
         isLoggedIn={isLoggedIn}
         handleLogin={handleLogin}
-        handleLogout={handleLogout}
         user={user}
       />
     )

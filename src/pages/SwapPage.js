@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
-import Button from 'react-bootstrap/Button';
 import BookAPI from '../api/BookAPI';
 import { fetchUserByID } from '../api/UserAPI';
 import UserContext from '../contexts/UserContext';

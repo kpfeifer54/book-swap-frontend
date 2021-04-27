@@ -51,6 +51,8 @@ async function deleteBook(book_id) {
       'Authorization': `JWT ${localStorage.getItem("auth-user")}`
     },
     method: 'DELETE'})
+  let data = response.json()
+  return data
 }
 
 // List models read, update, delete
@@ -126,9 +128,11 @@ async function deleteSwap(swap_id) {
       'Authorization': `JWT ${localStorage.getItem("auth-user")}`
     },
     method: 'DELETE'})
+  let data = response.json()
+  return data
 }
 
-export default {
+ let BookAPI = {
   fetchBooks,
   addBook,
   fetchBookByID,
@@ -142,3 +146,5 @@ export default {
   editBook,
   deleteBook,
 }
+
+export default BookAPI;

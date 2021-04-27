@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import ListGroup from 'react-bootstrap/ListGroup'
 import BookItem from '../../components/BookItem/BookItem.js';
-import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
 import BookAPI from '../../api/BookAPI';
 import UserContext from '../../contexts/UserContext';
 import SwapSelect from '../SwapSelect/SwapSelect.js';
@@ -43,10 +43,8 @@ function BookListItem(props) {
   function renderButtons(item) {
     return (
       <div>
-          <a className="App-button" id={item} onClick={() => handleButtonClick(item, "book_list")}>+ My Books</a>
-          <p></p>
-          <a className="App-button" id={item} onClick={() => handleButtonClick(item, "wish_list")}>+ Wish List</a>
-          <p></p>
+          <Button variant="link" className="App-button" id={item} onClick={() => handleButtonClick(item, "book_list")}>+ My Books</Button>
+          <Button variant="link" className="App-button" id={item} onClick={() => handleButtonClick(item, "wish_list")}>+ Wish List</Button>
           {BookListStatus && <Alert variant="light">Book Added!</Alert>}
       </div>
     )

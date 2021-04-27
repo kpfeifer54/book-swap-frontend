@@ -1,9 +1,9 @@
 import React from 'react';
-import { Navbar, Nav, Button, NavDropdown } from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import UserContext from '../../contexts/UserContext';
 import { Link } from 'react-router-dom';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faUser } from '@fortawesome/free-solid-svg-icons';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function AppNav(props) {
 

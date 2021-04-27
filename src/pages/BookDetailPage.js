@@ -8,10 +8,13 @@ function BookDetailPage(props) {
   const [Book, setBook] = useState()
   const [BookReview, setBookReview] = useState()
 
-  useEffect(async () => {
-    let bookId = props.match.params.bookID
-    let book_detail = await getBook(bookId)
-    setBook(book_detail)
+  useEffect( () => {
+    async function fetchData() {
+      let bookId = props.match.params.bookID
+      let book_detail = await getBook(bookId)
+      setBook(book_detail)
+    }
+    fetchData();
   }, [props.match.params.bookID])
 
   useEffect( () => {
@@ -19,7 +22,6 @@ function BookDetailPage(props) {
   }, [Book])
 
   async function getBook(book_id) {
-    console.log(book_id)
     return await BookAPI.fetchBookByID(book_id)
   }
 
@@ -33,7 +35,6 @@ function BookDetailPage(props) {
   async function renderBook(book) {
     if (book) {
       let data = await getGoogleBook(book.title, book.author)
-      console.log(data)
       setBookReview({"description": data.items[0].volumeInfo.description, "avg_review": data.items[0].volumeInfo.averageRating, "preview_link": data.items[0].volumeInfo.previewLink})
     }
   }

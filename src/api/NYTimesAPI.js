@@ -14,7 +14,9 @@ async function fetchLists() {
   return data
 }
 
-export default {
+let NYTimesAPI = {
   fetchBestSellers,
   fetchLists
 }
+
+export default NYTimesAPI
