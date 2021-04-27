@@ -43,8 +43,10 @@ function BookListItem(props) {
   function renderButtons(item) {
     return (
       <div>
-          <Button className="App-button" id={item} onClick={() => handleButtonClick(item, "book_list")}>+ My Books</Button>
-          <Button className="App-button" id={item} onClick={() => handleButtonClick(item, "wish_list")}>+ Wish List</Button>
+          <a className="App-button" id={item} onClick={() => handleButtonClick(item, "book_list")}>+ My Books</a>
+          <p></p>
+          <a className="App-button" id={item} onClick={() => handleButtonClick(item, "wish_list")}>+ Wish List</a>
+          <p></p>
           {BookListStatus && <Alert variant="light">Book Added!</Alert>}
       </div>
     )
@@ -53,7 +55,7 @@ function BookListItem(props) {
   return (
     <ListGroup.Item key={props.item.id}>
         <Container>
-          <Row>
+          <Row className="align-items-center">
             <Col sm={7}>
               <BookItem book={props.item}/>
             </Col>
@@ -61,7 +63,7 @@ function BookListItem(props) {
               {renderButtons(props.item)}
             </Col>
             <Col>
-            {props.list_type === "User Books" && <SwapSelect user2={props.item.user} book_id={props.item.id} title={props.item.title} author={props.item.author}></SwapSelect>}
+            {props.list_type === "User Books" && <SwapSelect user2={props.item.user} book_id={props.item.id}></SwapSelect>}
             </Col>
           </Row>
         </Container>

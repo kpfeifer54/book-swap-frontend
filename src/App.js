@@ -7,8 +7,7 @@ import AddBookPage from './pages/AddBookPage.js';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import BookListPage from './pages/BookListPage.js';
-import MyBooksPage from './pages/MyBooksPage.js';
-import AllBooksPage from './pages/AllBooksPage.js';
+import UserBooksPage from './pages/UserBooksPage.js';
 import SwapPage from './pages/SwapPage.js';
 import BookDetailPage from './pages/BookDetailPage.js';
 import BestSellersPage from './pages/BestSellersPage.js';
@@ -92,7 +91,7 @@ function App() {
             <Route exact path="/login" render={renderLoginPage} />
             <Route exact path="/signup" component={SignupPage} />
             <Route exact path="/wish-list" render={() => <BookListPage type="wish_list"/>} />
-            <Route exact path="/books" component={AllBooksPage} />
+            <Route exact path="/books" component={UserBooksPage} />
             <Route exact path="/swaps" component={SwapPage} />
             <Route exact path="/books/:bookID" component={BookDetailPage} />
             <Route exact path="/books/:bookID/edit" component={AddBookPage} />

@@ -42,8 +42,8 @@
 }
 
 .Login-form {
-  margin-left: 500px;
-  margin-right: 500px;
+  margin-left: 300px;
+  margin-right: 300px;
 }
 
 .App-button {
@@ -63,4 +63,8 @@
 
 #basic-nav-dropdown {
   margin-right:30px;
+}
+
+.Book-image {
+  box-shadow: 0px 0px 33px -5px rgba(0,0,0,0.72);
 }

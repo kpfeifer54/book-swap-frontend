@@ -20,12 +20,13 @@ function BookList(props) {
     if (list_type === "User Books") {
       let book_list = []
       let book_lists = await BookAPI.fetchAllBookLists("book_list")
-        console.log(book_lists)
         for (let list of book_lists) {
-          for (let book of list.books) {
-            let book_details = await getBook(book)
-            book_details["user"] = list.user
-            book_list.push(book_details)
+          if (list.user !== userContext.user.id) {
+            for (let book of list.books) {
+              let book_details = await getBook(book)
+              book_details["user"] = list.user
+              book_list.push(book_details)
+            }
           }
         }
       setBooks(book_list)

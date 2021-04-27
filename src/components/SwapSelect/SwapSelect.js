@@ -5,14 +5,13 @@ import UserContext from '../../contexts/UserContext';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 
-function SwapSelect(props) {
+function SwapSelect({user2, book_id}) {
 
-  // props: user2, book_id, title, author These identify the book to be swapped. Todo: maybe just pass in book instance?
+  // props: user2, book_id These identify the book to be swapped.
 
   const userContext = React.useContext(UserContext);
 
   const [MyBooks, setMyBooks] = useState([])
-  const [SelectedBook, setSelectedBook] = useState({title: "Select Book To Swap"})
   const [SwapStatus, setSwapStatus] = useState(false)
 
   async function getBooks() {
@@ -30,37 +29,30 @@ function SwapSelect(props) {
   }, [userContext.user])
 
   async function handleSelect(e) {
-    console.log(e)
-    let selected_book = await BookAPI.fetchBookByID(e)
-    console.log(selected_book)
-    setSelectedBook(selected_book)
-  }
-
-  async function getBook(book_id) {
-    return await BookAPI.fetchBookByID(book_id)
-  }
-
-  async function handleButtonClick(event) {
-    event.preventDefault()
     const swapObject = {
       user1: userContext.user.id,
-      user2: props.user2,
-      book1: SelectedBook.id,
-      book2: props.book_id,
+      user2: user2,
+      book1: e,
+      book2: book_id,
       status: "Proposed"
     }
     setSwapStatus(true)
       return await BookAPI.addSwap(swapObject)
   }
 
+  async function getBook(book_id) {
+    return await BookAPI.fetchBookByID(book_id)
+  }
+
   return (
     <div>
-        <DropdownButton className="App-button" id="dropdown-item-button" title={SelectedBook.title} onSelect={(e) => handleSelect(e)}>
+        {!SwapStatus && 
+          <DropdownButton className="App-button" id="dropdown-item-button" title="Propose A Swap" onSelect={(e) => handleSelect(e)}>
             {MyBooks.map((item) => (
             <Dropdown.Item key={item.id} eventKey={item.id}>{item.title} by {item.author}</Dropdown.Item>
             ))}
-        </DropdownButton>
-        <Button className="App-button" onClick={(e) => handleButtonClick(e)}>Propose Swap</Button>
+          </DropdownButton>
+        }
         {SwapStatus && <p>Swap Submitted!</p>}
     </div>
   );

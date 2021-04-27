@@ -5,6 +5,7 @@ import UserContext from '../../contexts/UserContext';
 import SwapSelect from '../SwapSelect/SwapSelect.js';
 
 function SwapAlert(props) {
+  // props: book 
 
   const userContext = React.useContext(UserContext);
 
@@ -24,10 +25,11 @@ function SwapAlert(props) {
       for (let list of book_lists) {
         for (let book of list.books) {
           let book_details = await getBook(book)
-          if (book_details.title === props.title && book_details.author === props.author) {
+          if (book_details.title === props.book.title && book_details.author === props.book.author) {
             let response = await fetchUserByID(list.user)
             let data = await response.json()
             setUser2(data)
+            return data
           }
         }
       }
@@ -37,7 +39,7 @@ function SwapAlert(props) {
   return (
     <div>
       {User2 && <p>{User2.username} has this book!</p>}
-      {User2 && <SwapSelect user2={User2.id} book_id={props.book_id}></SwapSelect>}
+      {User2 && <SwapSelect user2={User2.id} book_id={props.book.id}></SwapSelect>}
     </div>
   );
 }

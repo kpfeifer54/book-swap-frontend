@@ -17,14 +17,14 @@ function BookItem(props) {
   return (
     <div>
       <Container>
-        <Row>
-          <Col>
+        <Row className="align-items-center">
+          <Col sm={3}>
             {(props.book.id)?
-              <Link to={`books/${props.book.id}`}><Image src={props.book.book_image} thumbnail width="96" height="65" /></Link>
-              : <Image src={props.book.book_image} thumbnail width="96" height="65" />
+              <Link to={`books/${props.book.id}`}><Image className="Book-image" src={props.book.book_image} thumbnail width="96" height="65" /></Link>
+              : <Image className="Book-image" src={props.book.book_image} thumbnail width="96" height="65" />
             }
           </Col>
-          <Col sm={7}>
+          <Col>
             {(props.book.id)?
               <Link to={`books/${props.book.id}`}><h2 className="Book-info">{props.book.title}</h2></Link>
               :<h2 className="Book-info">{props.book.title}</h2> 

@@ -1,7 +1,7 @@
-// let BASE_URL = "https://book-swap-backend.herokuapp.com"
-let BASE_URL = "http://localhost:8000"
+let BASE_URL = "https://book-swap-backend.herokuapp.com"
+// let BASE_URL = "http://localhost:8000"
 
-//Books model create, read, update
+//Books model create, read, update, delete
 async function fetchBooks() {
   let response = await fetch(`${BASE_URL}/books/books/`, {
     headers: {
@@ -12,7 +12,6 @@ async function fetchBooks() {
 }
 
 async function addBook(bookObject) {
-  console.log(bookObject)
   let response = await fetch(`${BASE_URL}/books/books/`, {
     headers: {
       'Content-Type': 'application/json',
@@ -56,7 +55,6 @@ async function deleteBook(book_id) {
 
 // List models read, update, delete
 async function fetchBookList(user, list_type) {
-  console.log(`${user[list_type]}`)
   let response = await fetch(`${BASE_URL}/books/${list_type}/${user[list_type]}`, {
     headers: {
     'Authorization': `JWT ${localStorage.getItem("auth-user")}`
@@ -66,9 +64,6 @@ async function fetchBookList(user, list_type) {
 }
 
 async function addBookToList(book_list, list_id, list_type) {
-  console.log(list_type)
-  console.log(list_id)
-  console.log(JSON.stringify(book_list))
   let response = await fetch(`${BASE_URL}/books/${list_type}/${list_id}/`, {
     headers: {
       'Content-Type': 'application/json',

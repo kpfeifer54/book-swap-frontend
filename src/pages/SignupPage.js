@@ -27,15 +27,15 @@ const SignupPage = (props) => {
       <Form className="Login-form" onSubmit={handleSignup}>
       <Form.Group controlId="formBasicUsername">
         <Form.Label>Username</Form.Label>
-        <Form.Control type='text' placeholder='Enter username' name='username' />
+        <Form.Control type='text' placeholder='Enter Username' name='username' />
       </Form.Group>
       <Form.Group controlId="formBasicUsername">
         <Form.Label>Email</Form.Label>
-        <Form.Control type='email' placeholder='Enter email' name='email' />
+        <Form.Control type='email' placeholder='Enter Email' name='email' />
       </Form.Group>
       <Form.Group controlId="formBasicPassword">
         <Form.Label>Password</Form.Label>
-        <Form.Control type="password" placeholder="Password" name='password' />
+        <Form.Control type="password" placeholder="Enter Password" name='password' />
       </Form.Group>
       <Button variant="primary" type="submit">
         Submit

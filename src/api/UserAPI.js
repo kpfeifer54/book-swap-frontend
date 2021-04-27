@@ -1,5 +1,5 @@
-// let BASE_URL = "https://book-swap-backend.herokuapp.com"
-let BASE_URL = "http://localhost:8000"
+let BASE_URL = "https://book-swap-backend.herokuapp.com"
+// let BASE_URL = "http://localhost:8000"
 
 const login = (userObject) => {
   return fetch(`${BASE_URL}/token-auth/`, {

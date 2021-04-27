@@ -51,18 +51,18 @@ function BookListPage(props) {
      return (
         <ListGroup.Item key={index}>
           <Container>
-            <Row>
-              <Col sm={7}>
+            <Row className="align-items-center">
+              <Col>
                 <BookItem book={item}/>
               </Col>
-              <Col>
+              <Col sm={2}>
                 <Link to={`books/${item.id}/edit`}><FontAwesomeIcon className="icons" icon={faEdit}/></Link>
                 <span id={item.id} onClick={() => handleDeleteButtonClick(item.id)}><FontAwesomeIcon className="icons" icon={faTrash}/></span>
               </Col>
-              <Col>
               {props.type === "wish_list" &&
-                <SwapAlert title={item.title} author={item.author} book_id={item.id}></SwapAlert>}
-              </Col>
+                <Col sm={3}>
+                  <SwapAlert book={item}></SwapAlert>
+                </Col>}
             </Row>
           </Container>
         </ListGroup.Item>
