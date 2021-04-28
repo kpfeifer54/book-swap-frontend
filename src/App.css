@@ -68,3 +68,8 @@
 .Book-image {
   box-shadow: 0px 0px 33px -5px rgba(0,0,0,0.72);
 }
+
+.Login-links {
+  display: flex;
+  justify-content: flex-end;
+}

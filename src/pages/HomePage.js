@@ -16,9 +16,14 @@ function HomePage({ isLoggedIn, user, handleLogout }) {
         <BookCarousel></BookCarousel>
         <br></br>
         {
-          !isLoggedIn &&
+          !isLoggedIn ?
           <div>
             <Button onClick={() => {history.push("/signup")}}>Signup</Button>
+          </div>
+          :
+          <div>
+            <h4>Get started by adding your books</h4>
+            <Button onClick={() => {history.push("/my-books")}}>Go to my books</Button>
           </div>
         }
       </Jumbotron>

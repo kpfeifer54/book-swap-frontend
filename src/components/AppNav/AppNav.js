@@ -28,13 +28,12 @@ function AppNav(props) {
             <NavDropdown.Item as={Link} to="/wish-list">Wish List</NavDropdown.Item>
             <NavDropdown.Item as={Link} to="/swaps">Swaps</NavDropdown.Item>
             <NavDropdown.Item onClick={props.handleLogout}>Logout</NavDropdown.Item>
-            </NavDropdown>
+          </NavDropdown>
         </Nav>
         :
-        <Nav className="justify-content-end">
-          <Nav.Item>
-            <Nav.Link href="/login">Login</Nav.Link>
-          </Nav.Item>
+        <Nav className="justify-content-end Login-links">
+          <Nav.Link href="/login">Login</Nav.Link>
+          <Nav.Link href="/signup">Signup</Nav.Link>
         </Nav>
       }
       {/* <Form inline>

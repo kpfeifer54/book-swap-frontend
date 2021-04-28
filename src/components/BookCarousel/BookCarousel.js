@@ -47,7 +47,7 @@ function BookCarousel() {
       <Carousel responsive={responsive}>
         {Books.map((item, index) => {
           return(
-              <Image className="Book-image" key={index} src={item.book_image} thumbnail width="209" height="160"/>
+            <Image className="Book-image" key={index} src={item.book_image} thumbnail width="209" height="160"/>
           )
         })}
       </Carousel>
